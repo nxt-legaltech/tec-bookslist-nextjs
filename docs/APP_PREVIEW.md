@@ -1,6 +1,6 @@
 # TEC BooksList — Application Preview
 
-<p>
+<p align="justify">
 This document provides a compact visual overview of the TEC BooksList application (Next.js + TypeScript). It highlights the main UI states captured in the `docs/screenshots/` folder.
 </p>
 

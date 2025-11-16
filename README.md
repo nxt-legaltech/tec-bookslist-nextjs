@@ -1,10 +1,14 @@
 # TEC BooksList — Next.js
 
+<p align="justify">
 A simple, layered Next.js application that consumes the Gutendex public books API and displays a list of books with basic metadata (id, title and author). The project demonstrates a small clean-architecture / layered approach with Domain, Infrastructure, Application and Presentation layers, and uses Tailwind CSS utility classes in the presentation.
+</p>
 
 ## Summary
 
+<p align="justify">
 TEC BooksList is a minimal example application built with Next.js and TypeScript that fetches books from the Gutendex API and displays them in a responsive grid. The codebase is organized using a layered architecture and includes assembler utilities to map external API payloads into domain entities.
+</p>
 
 ## Application Preview
 For a complete overview of how the application works, please review:
@@ -71,7 +75,9 @@ src/
 
 ## Environment
 
+<p align="justify">
 This project does not require any private environment variables to run against the public Gutendex API. Optionally you can override the base URL with:
+</p>
 
 ```
 NEXT_PUBLIC_BOOKS_API_BASE_URL=https://gutendex.com
@@ -95,15 +101,3 @@ Contributions are welcome. Suggested workflow:
 5. Open a Pull Request with a clear description
 
 Please follow TypeScript strictness and keep changes scoped.
-
-## Troubleshooting
-
-- If the app shows "Loading books..." forever, open the browser DevTools console to inspect client-side errors. The app includes console logs from the fetch flow in `book-api-service.ts` to aid debugging.
-- If you are rate-limited by the public API, try again later or set `NEXT_PUBLIC_BOOKS_API_BASE_URL` to a local mock server.
-
-## License & Acknowledgements
-
-This project is provided as-is for learning and demo purposes. It consumes the Gutendex API (https://gutendex.com) for sample data.
-
----
-*If you want, I can also add a short `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, or a `docs/` folder with screenshots and an API contract.*
