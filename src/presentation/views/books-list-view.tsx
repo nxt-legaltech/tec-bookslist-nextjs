@@ -18,11 +18,8 @@ export function BooksListView() {
   const { books, loading, error, fetchBooks } = useBooks();
 
   useEffect(() => {
-    console.log("BooksListView mounted, starting fetch...");
     fetchBooks();
   }, [fetchBooks]);
-
-  console.log("Render state:", { loading, error, booksCount: books.length });
 
   if (loading) {
     return (
@@ -49,9 +46,17 @@ export function BooksListView() {
   }
 
   return (
-    <section>
-      <h1>Books List (first 10)</h1>
-      <p>Loaded {books.length} books</p>
+    <section className="max-w-5xl mx-auto mb-12">
+      <h1 className="text-4xl font-extrabold text-white drop-shadow-md tracking-wide mb-2">
+        Books Collection
+      </h1>
+
+      <p className="text-white/90 text-lg mb-6">
+        Loaded <span className="font-semibold">{books.length}</span> books
+      </p>
+
+      <div className="w-32 h-1 bg-white/60 rounded mb-10"></div>
+
       <BooksList books={books} />
     </section>
   );
