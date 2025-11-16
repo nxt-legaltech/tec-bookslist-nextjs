@@ -41,4 +41,14 @@ export class BookAssembler {
 
     return results.map((resource) => this.toEntityFromResource(resource));
   }
+
+  /**
+   * Converts an HTTP response containing book data into an array of Book entities.
+   * @param response - The HTTP response object with data property.
+   * @returns An array of Book domain entities.
+   */
+  static toEntitiesFromResponse(response: any): Book[] {
+    const results = response.data?.results || [];
+    return this.toEntitiesFromResults(results);
+  }
 }

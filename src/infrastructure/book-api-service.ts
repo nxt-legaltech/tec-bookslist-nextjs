@@ -1,75 +1,34 @@
 import { Book } from "@/domain/book";
 import { BookAssembler } from "./asemblers/book-assembler";
+import { httpClient } from "../shared/infrastructure/http-client";
 
 /**
- * Interface representing the structure of the Gutendex API response.
- */
-interface GutendexResponse {
-  count: number;
-  results: any[];
-}
-
-/**
- * Book Api Service
+ * Book API Service
  *
- * @summary Service for fetching books from the Gutendex API.
+ * @summary Provides methods to interact with the Gutendex Books API.
  *
  * @description
- * This service provides methods to interact with the Gutendex API to retrieve book data.
- * It handles network requests, error handling, and data transformation into domain entities.
+ * This service handles all book-related API operations including fetching
+ * paginated lists of books. It uses the HTTP client for network requests
+ * and the BookAssembler for data transformation into domain entities.
  */
 export class BookApiService {
-  /**
-   * Base URL for the Gutendex API.
-   */
-  private static readonly BASE_URL =
-    process.env.NEXT_PUBLIC_BOOKS_API_BASE_URL ?? "https://gutendex.com";
+  private static readonly BASE_PATH = "/books";
 
   /**
-   * Path for the books endpoint.
-   */
-  private static readonly BOOKS_PATH = "/books";
-
-  /**
-   * Fetches a paginated list of books from the Gutendex API.
+   * Get all books (paginated)
    * @param page - The page number to fetch (default is 1).
-   * @returns An object containing an array of Book entities and the total count of books.
-   * @throws Will throw an error if the network request fails or if the API returns an error status.
+   * @returns An object containing an array of Book entities and the total count.
    */
   static async getBooks(
     page: number = 1
   ): Promise<{ books: Book[]; total: number }> {
-    const url = `${this.BASE_URL}${this.BOOKS_PATH}/?page=${page}`;
-
-    let response: Response;
-
-    try {
-      response = await fetch(url, {
-        cache: 'no-store',
-      });
-    } catch (err) {
-      throw new Error("Network error while fetching books.");
-    }
-
-    if (!response.ok) {
-      throw new Error(
-        `API error while fetching books (status: ${response.status}).`
-      );
-    }
-
-    let data: GutendexResponse;
-
-    try {
-      data = (await response.json()) as GutendexResponse;
-    } catch (err) {
-      throw new Error("Error parsing JSON response.");
-    }
-
-    const books = BookAssembler.toEntitiesFromResults(data.results || []);
-
+    const response = await httpClient.get(`${this.BASE_PATH}/?page=${page}`);
+    const books = BookAssembler.toEntitiesFromResponse(response);
+    
     return {
       books,
-      total: typeof data.count === "number" ? data.count : books.length,
+      total: response.data?.count || books.length,
     };
   }
 }
